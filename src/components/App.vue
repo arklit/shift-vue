@@ -1,11 +1,12 @@
 <template>
   <div class="App">
-    <Shift  @prev="prevArticle" @next="nextArticle"/>
+    <Shift @menuOpen="openMenu"  @prev="prevArticle" @next="nextArticle"/>
     <Links
         :links="links"
         @activateTab="activateTab"
         @prev="prevArticle"
-        @next="nextArticle"/>
+        @next="nextArticle"
+        :isOpen="isMenuOpen"/>
     <Article
         :title="activeArticle.title"
         :text="activeArticle.text"
@@ -26,15 +27,22 @@ import Shift  from './Shift';
      return {
        articles: articles,
        links: links,
-       activeArticle: articles[0]
+       activeArticle: articles[0],
+       isMenuOpen: false,
      };
    },
    methods: {
+     openMenu() {
+       this.isMenuOpen = !this.isMenuOpen
+     },
      activateTab(link) {
        const article = this.articles.find(article => article.id === link.id);
        this.activeArticle = article;
        this.links.forEach(item => item.active = false);
        link.active = true;
+       if(window.matchMedia('(max-width:1336px)').matches) {
+         this.openMenu()
+       }
      },
      prevArticle() {
        const currentIndex = this.articles.findIndex(article => article.id === this.activeArticle.id);
@@ -57,6 +65,7 @@ import Shift  from './Shift';
  * {
    padding: 0;
    margin: 0;
+   box-sizing: border-box;
  }
  a {
    text-decoration: none;
@@ -71,6 +80,7 @@ import Shift  from './Shift';
    }
  }
  .App {
+   width: 100%;
    padding: 32px;
    display: flex;
    flex-direction: row;

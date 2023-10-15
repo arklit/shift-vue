@@ -56,7 +56,8 @@ import 'swiper/css';
     @media screen and (max-width: 1336px) {
       font-size: 40px;
       line-height: 45px;
-      margin: 16px 0 30px;
+      margin: 16px 0 24px;
+      text-align: center;
     }
   }
   &__text {
